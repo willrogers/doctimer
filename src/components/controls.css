@@ -4,6 +4,13 @@ button {
   height: 100px;
   border-radius: 5px;
 }
+#topdate {
+  width: 100%;
+  text-align: center;
+}
+#topdate.p {
+  margin: 0;
+}
 #timer {
   width: 90%;
   margin: 2% 5% 2% 5%;

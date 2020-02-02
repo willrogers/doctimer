@@ -6,50 +6,54 @@ import {
   TimerButton,
   SwitchButton,
 } from "../components/buttons"
+import { fullDateString, Segment } from "../model"
+import { useEffect } from "react"
 export const ControlsView = props => {
-  const [selected, setSelected] = useState(null)
-  const [started, setStarted] = useState(null)
-  const [current, setCurrent] = useState(null)
-  const [startTime, setStartTime] = useState(null)
-  const [id, setId] = useState(null)
+  const { currentSegment, setCurrentSegment, started, setStarted } = props
+  const [time, setTime] = useState(new Date())
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setTime(new Date())
+    }, 1000)
+    return () => {
+      clearInterval(timer)
+    }
+  })
   function startPressed() {
     setStarted(!started)
-    if (started) {
-      setSelected(null)
-      clearInterval(id)
-      setId(null)
-      setCurrent(null)
-      setStartTime(null)
+    if (started && currentSegment) {
+      currentSegment.stop()
+      props.day.addSegment(currentSegment)
     }
   }
-  function itemPressed(name) {
-    if (selected === name) {
-      setSelected(null)
-      clearInterval(id)
-      setId(null)
+  function itemPressed(category) {
+    if (currentSegment === null) {
+      // Start segment
+      const newSegment = new Segment(category)
+      setCurrentSegment(newSegment)
+    } else if (currentSegment.category === category) {
+      // Stop segment
+      currentSegment.stop()
+      props.day.addSegment(currentSegment)
+      setCurrentSegment(null)
     } else {
-      setSelected(name)
-      const now = new Date()
-      setStartTime(now)
-      setId(
-        setInterval(function() {
-          const now = new Date()
-          setCurrent(now)
-        }, 1000)
-      )
+      currentSegment.stop()
+      props.day.addSegment(currentSegment)
+      const newSegment = new Segment(category)
+      setCurrentSegment(newSegment)
     }
   }
-  let duration = null
-  if (startTime !== null && current !== null) {
-    duration = current - startTime
-  }
-  const buttonsSelected = props.categories.map(name => [
-    name,
-    name === selected,
+  const buttonsSelected = props.categories.map(category => [
+    category,
+    currentSegment && category === currentSegment.category,
   ])
   return (
     <div id="buttonScreen">
-      <Timer text={selected} time={duration} running={started} />
+      <div id="topdate">
+        <p>{fullDateString(time)}</p>
+        <p>{props.day.segments.length} events so far.</p>
+      </div>
+      <Timer running={started} segment={currentSegment} />
       {buttonsSelected.map(deets => (
         <TimerButton
           key={deets[0]}

@@ -5,19 +5,21 @@ import { StatsView } from "../components/stats"
 import { Day, CATEGORIES } from "../model"
 
 const DoctimerPage = () => {
-  const day = new Day()
+  const [day, setDay] = useState(new Day())
   const [controlsView, setControlsView] = useState(true)
-
-  function addSegment(segment) {
-    day.addSegment(segment)
-  }
+  const [currentSegment, setCurrentSegment] = useState(null)
+  const [started, setStarted] = useState(null)
 
   if (controlsView) {
     return (
       <ControlsView
         setControlsView={setControlsView}
-        addSegment={addSegment}
+        day={day}
         categories={CATEGORIES}
+        currentSegment={currentSegment}
+        setCurrentSegment={setCurrentSegment}
+        started={started}
+        setStarted={setStarted}
       />
     )
   } else {

@@ -1,30 +1,20 @@
 import React from "react"
-
-function zeroPad(num, places) {
-  return String(num).padStart(places, "0")
-}
-
-function timeString(millis) {
-  const secs = millis / 1000
-  const minutes = zeroPad(Math.floor(secs / 60), 2)
-  const seconds = zeroPad(Math.round(secs % 60), 2)
-  console.log(`result ${minutes}:${seconds}`)
-  return `${minutes}:${seconds}`
-}
+import { timeString } from "../model"
 
 export const Timer = props => {
-  const time = timeString(props.time)
+  const { running, segment } = props
   let child = <div>Press 'Start' to begin</div>
-  if (props.running) {
-    if (props.text) {
+  if (running) {
+    if (segment !== null) {
+      const time = timeString(segment.currentDuration())
       child = (
         <>
-          <div style={{ width: "50%" }}>{props.text}</div>
+          <div style={{ width: "50%" }}>{segment.category}</div>
           <div style={{ width: "50%" }}> {time} </div>
         </>
       )
     } else {
-      child = <div>Press a category to start</div>
+      child = <div>No category selected</div>
     }
   }
   return <div id="timer">{child}</div>
