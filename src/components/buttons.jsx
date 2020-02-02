@@ -6,7 +6,7 @@ function zeroPad(num, places) {
 
 function timeString(millis) {
   const secs = millis / 1000
-  const minutes = zeroPad(Math.round(secs / 60), 2)
+  const minutes = zeroPad(Math.floor(secs / 60), 2)
   const seconds = zeroPad(Math.round(secs % 60), 2)
   console.log(`result ${minutes}:${seconds}`)
   return `${minutes}:${seconds}`
@@ -14,12 +14,20 @@ function timeString(millis) {
 
 export const Timer = props => {
   const time = timeString(props.time)
-  return (
-    <div id="timer">
-      <div style={{ width: "50%" }}>{props.text}</div>
-      <div style={{ width: "50%" }}> {time} </div>
-    </div>
-  )
+  let child = <div>Press 'Start' to begin</div>
+  if (props.running) {
+    if (props.text) {
+      child = (
+        <>
+          <div style={{ width: "50%" }}>{props.text}</div>
+          <div style={{ width: "50%" }}> {time} </div>
+        </>
+      )
+    } else {
+      child = <div>Press a category to start</div>
+    }
+  }
+  return <div id="timer">{child}</div>
 }
 
 export const StartButton = props => {
@@ -29,7 +37,7 @@ export const StartButton = props => {
     }
   }
   const bgcolor = props.selected ? "red" : "green"
-  const text = props.selected ? "stop" : "start"
+  const text = props.selected ? "Stop" : "Start"
   return (
     <button
       id="startButton"
@@ -61,4 +69,21 @@ export const TimerButton = props => {
       {text}
     </button>
   )
+}
+
+export const SwitchButton = props => {
+  let text = ""
+  if (props.toControls) {
+    text = "Back to controls"
+  } else {
+    text = "See stats"
+  }
+  function doSwitch() {
+    if (props.toControls) {
+      props.setControlsView(true)
+    } else {
+      props.setControlsView(false)
+    }
+  }
+  return <button onClick={doSwitch}>{text}</button>
 }
