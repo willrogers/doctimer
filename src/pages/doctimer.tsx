@@ -2,13 +2,13 @@ import React, { useState } from "react"
 
 import { ControlsView } from "../components/controls"
 import { StatsView } from "../components/stats"
-import { Day, CATEGORIES } from "../model"
+import { Day, CATEGORIES, Segment } from "../model"
 
-const DoctimerPage = () => {
-  const [day, setDay] = useState(new Day())
-  const [controlsView, setControlsView] = useState(true)
-  const [currentSegment, setCurrentSegment] = useState(null)
-  const [started, setStarted] = useState(null)
+const DoctimerPage = (): JSX.Element => {
+  const [day, setDay] = useState<Day>(new Day())
+  const [controlsView, setControlsView] = useState<boolean>(true)
+  const [currentSegment, setCurrentSegment] = useState<Segment>(null)
+  const [started, setStarted] = useState<boolean>(null)
 
   if (controlsView) {
     return (
