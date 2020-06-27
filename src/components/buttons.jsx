@@ -1,5 +1,6 @@
 import React from "react"
 import { timeString } from "../model"
+import classes from "./buttons.module.css"
 
 export const Timer = props => {
   const { running, segment } = props
@@ -14,10 +15,10 @@ export const Timer = props => {
         </>
       )
     } else {
-      child = <div>No category selected</div>
+      child = <div>Select a category</div>
     }
   }
-  return <div id="timer">{child}</div>
+  return <div className={`${classes.button} ${classes.timer}`}>{child}</div>
 }
 
 export const StartButton = props => {
@@ -30,7 +31,7 @@ export const StartButton = props => {
   const text = props.selected ? "Stop" : "Start"
   return (
     <button
-      id="startButton"
+      className={classes.button}
       style={{ backgroundColor: bgcolor }}
       type="button"
       onClick={clicked}
@@ -51,6 +52,7 @@ export const TimerButton = props => {
     props.altname !== undefined && props.selected ? props.altname : props.name
   return (
     <button
+      className={classes.button}
       disabled={props.disabled}
       style={{ backgroundColor: bgcolor }}
       type="button"
@@ -75,5 +77,12 @@ export const SwitchButton = props => {
       props.setControlsView(false)
     }
   }
-  return <button onClick={doSwitch}>{text}</button>
+  return (
+    <button
+      className={`${classes.button} ${classes.switch}`}
+      onClick={doSwitch}
+    >
+      {text}
+    </button>
+  )
 }

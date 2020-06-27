@@ -1,0 +1,20 @@
+.status {
+  height: 5vh;
+  width: 100vw;
+  display: flex;
+  font-size: 1rem;
+}
+
+.date {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.events {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

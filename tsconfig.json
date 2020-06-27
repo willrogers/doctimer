@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "target": "es5",
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+    "allowSyntheticDefaultImports": true
+  }
+}

@@ -6,8 +6,10 @@ import {
   TimerButton,
   SwitchButton,
 } from "../components/buttons"
-import { fullDateString, Segment } from "../model"
+import { Status } from "./status"
+import { Segment } from "../model"
 import { useEffect } from "react"
+
 export const ControlsView = props => {
   const { currentSegment, setCurrentSegment, started, setStarted } = props
   const [time, setTime] = useState(new Date())
@@ -49,10 +51,7 @@ export const ControlsView = props => {
   ])
   return (
     <div id="buttonScreen">
-      <div id="topdate">
-        <p>{fullDateString(time)}</p>
-        <p>{props.day.segments.length} events so far.</p>
-      </div>
+      <Status time={time} events={props.day.segments.length} />
       <Timer running={started} segment={currentSegment} />
       {buttonsSelected.map(deets => (
         <TimerButton
