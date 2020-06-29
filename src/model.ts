@@ -1,10 +1,18 @@
-export const APPT = "Appointment"
+export const PHONE_APPT = "Phone Appointment"
+export const IN_PERSON_APPT = "Face-to-face Appointment"
 export const NOTES = "Notes"
 export const VISIT = "Home Visit"
 export const MEETING = "Meeting"
 export const CHECKS = "Checks"
 export const IN_BETWEEN = "In between"
-export const CATEGORIES = [APPT, NOTES, VISIT, MEETING, CHECKS]
+export const CATEGORIES = [
+  PHONE_APPT,
+  IN_PERSON_APPT,
+  NOTES,
+  VISIT,
+  MEETING,
+  CHECKS,
+]
 
 function zeroPad(num: number, places: number): string {
   return String(num).padStart(places, "0")

@@ -3,22 +3,37 @@ import { timeString } from "../model"
 import classes from "./buttons.module.css"
 
 export const Timer = props => {
+  function clicked() {
+    if (props.callback) {
+      props.callback(props.name)
+    }
+  }
   const { running, segment } = props
-  let child = <div>Press 'Start' to begin</div>
+  let child = <div>Start Clinic</div>
+  let text = ""
   if (running) {
     if (segment !== null) {
       const time = timeString(segment.currentDuration())
-      child = (
-        <>
-          <div style={{ width: "50%" }}>{segment.category}</div>
-          <div style={{ width: "50%" }}> {time} </div>
-        </>
-      )
+      text = `${segment.category}: ${time}`
     } else {
-      child = <div>Select a category</div>
+      text = "No appointment in progress"
     }
+    child = (
+      <>
+        <div>{text}</div>
+        <div className={classes.subhead}>Press to stop clinic</div>
+      </>
+    )
   }
-  return <div className={`${classes.button} ${classes.timer}`}>{child}</div>
+  return (
+    <button
+      onClick={clicked}
+      type="button"
+      className={`${classes.button} ${classes.timer}`}
+    >
+      {child}
+    </button>
+  )
 }
 
 export const StartButton = props => {
@@ -58,7 +73,7 @@ export const TimerButton = props => {
       type="button"
       onClick={clicked}
     >
-      {text}
+      {`${props.selected ? "Stop" : "Start"} ${text}`}
     </button>
   )
 }
@@ -84,5 +99,32 @@ export const SwitchButton = props => {
     >
       {text}
     </button>
+  )
+}
+
+export const Buttons = props => {
+  console.log("buttons")
+  return (
+    <div className={classes.buttons}>
+      <Timer
+        callback={props.startPressed}
+        selected={props.started}
+        running={props.started}
+        segment={props.currentSegment}
+      />
+      {props.buttonsSelected.map(deets => (
+        <TimerButton
+          key={deets[0]}
+          name={deets[0]}
+          selected={deets[1]}
+          callback={props.itemPressed}
+          disabled={!props.started}
+        ></TimerButton>
+      ))}
+      <SwitchButton
+        toControls={false}
+        setControlsView={props.setControlsView}
+      />
+    </div>
   )
 }

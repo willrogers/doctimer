@@ -1,11 +1,6 @@
 import React, { useState } from "react"
 import "./controls.css"
-import {
-  StartButton,
-  Timer,
-  TimerButton,
-  SwitchButton,
-} from "../components/buttons"
+import { Buttons } from "../components/buttons"
 import { Status } from "./status"
 import { Segment } from "../model"
 import { useEffect } from "react"
@@ -52,19 +47,12 @@ export const ControlsView = props => {
   return (
     <div id="buttonScreen">
       <Status time={time} events={props.day.segments.length} />
-      <Timer running={started} segment={currentSegment} />
-      {buttonsSelected.map(deets => (
-        <TimerButton
-          key={deets[0]}
-          name={deets[0]}
-          selected={deets[1]}
-          callback={itemPressed}
-          disabled={!started}
-        ></TimerButton>
-      ))}
-      <StartButton callback={startPressed} selected={started}></StartButton>
-      <SwitchButton
-        toControls={false}
+      <Buttons
+        buttonsSelected={buttonsSelected}
+        itemPressed={itemPressed}
+        started={started}
+        startPressed={startPressed}
+        currentSegment={currentSegment}
         setControlsView={props.setControlsView}
       />
     </div>
