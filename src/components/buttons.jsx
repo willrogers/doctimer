@@ -103,7 +103,6 @@ export const SwitchButton = props => {
 }
 
 export const Buttons = props => {
-  console.log("buttons")
   return (
     <div className={classes.buttons}>
       <Timer

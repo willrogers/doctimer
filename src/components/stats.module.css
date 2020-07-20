@@ -1,7 +1,5 @@
 .statsView {
-  height: 100vh;
-  width: 100vw;
-  margin: 0;
+  padding: 5px;
 }
 
 .statsContainer {
@@ -12,4 +10,14 @@
 .statsColumn {
   width: 50%;
   height: 60vh;
+}
+
+.category {
+  margin: 1em;
+  padding: 3px;
+  background-color: grey;
+}
+
+.category h3 {
+  margin: 0;
 }

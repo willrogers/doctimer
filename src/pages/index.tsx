@@ -23,7 +23,13 @@ const DoctimerPage = (): JSX.Element => {
       />
     )
   } else {
-    return <StatsView day={day} setControlsView={setControlsView} />
+    return (
+      <StatsView
+        currentSegment={currentSegment}
+        day={day}
+        setControlsView={setControlsView}
+      />
+    )
   }
 }
 
